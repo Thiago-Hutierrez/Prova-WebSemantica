@@ -1,0 +1,70 @@
+create(c:Vendedor {name: 'satan'})
+create(c:Cliente {name: 'jesus'})
+create(c:Banca {name: 'banca'})
+create(c:Produto {name: 'Alma Pura'})
+create(c:Produto {name: 'Alma Corrompida'})
+create(c:Distribuidor {name: 'Inferno'})
+
+MATCH
+(c:Produto),
+(d:Vendedor) 
+WHERE c.name = 'Alma Pura' AND d.name = 'satan' 
+CREATE (c)-[r:Venda]->(d)
+return type(r)
+
+MATCH
+(c:Produto),
+(d:Vendedor) 
+WHERE c.name = 'Alma Corrompida' AND d.name = 'satan' 
+CREATE (c)-[r:Venda]->(d)
+return type(r)
+
+MATCH
+(c:Distribuidor),
+(d:Vendedor) 
+WHERE c.name = 'Inferno' AND d.name = 'satan' 
+CREATE (c)-[r:Distribuição]->(d)
+return type(r)
+
+MATCH
+(c:Cliente),
+(d:Produto) 
+WHERE c.name = 'jesus' AND d.name = 'Alma Corrompida' 
+CREATE (c)-[r:Compra]->(d)
+return type(r)
+
+MATCH
+(c:Cliente),
+(d:Produto) 
+WHERE c.name = 'jesus' AND d.name = 'Alma Pura' 
+CREATE (c)-[r:Compra]->(d)
+return type(r)
+
+MATCH
+(c:Banca),
+(d:Produto) 
+WHERE c.name = 'banca' AND d.name = 'Alma Pura' 
+CREATE (c)-[r:temEstoque]->(d)
+return type(r)
+
+MATCH
+(c:Banca),
+(d:Produto) 
+WHERE c.name = 'banca' AND d.name = 'Alma Corrompida' 
+CREATE (c)-[r:temEstoque]->(d)
+return type(r)
+
+
+MATCH
+(c:Banca),
+(d:Vendedor) 
+WHERE c.name = 'banca' AND d.name = 'satan' 
+CREATE (c)-[r:Posse]->(d)
+return type(r)
+
+MATCH
+(c:Cliente),
+(d:Vendedor) 
+WHERE c.name = 'jesus' AND d.name = 'satan' 
+CREATE (c)-[r:Operação]->(d)
+return type(r)
